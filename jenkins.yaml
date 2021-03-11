@@ -1,4 +1,13 @@
+cloudbees-pipeline-policies:
+  config:
+    policies:
+    - action: "fail"
+      name: "Timeout policy"
+      rules:
+      - entirePipelineTimeoutRule:
+          maxTime: 60
 jenkins:
+  authorizationStrategy: "cloudBeesRoleBasedAccessControl"
   quietPeriod: 0
   systemMessage: 'Jenkins configured using CloudBees CI CasC - v2'
 unclassified:
@@ -17,7 +26,7 @@ unclassified:
     durabilityHint: PERFORMANCE_OPTIMIZED
   globallibraries:
     libraries:
-    - defaultVersion: "master"
+    - defaultVersion: "module-2"
       name: "pipeline-library"
       retriever:
         modernSCM:
@@ -57,6 +66,8 @@ kube:
           memory: false
           mountPath: "/var/maven/"
       yamlMergeStrategy: "override"
+groovy:
+  - url: https://raw.githubusercontent.com/Cloudbeesmohit/cloudbees-ci-config-bundle/master/groovy/create-pipeline-template-job.groovy
 credentials:
   system:
     domainCredentials:
